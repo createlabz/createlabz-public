@@ -81,18 +81,23 @@ print("ReSpeaker 2-Mic Pi Audio test")
 # Test of audio recording
 recordAudio = RecordAudio()
 
-# Run get audio device infos.
-recordAudio.getAudioDeviceInfo()
-
 # Audio Settings
 RESPEAKER_RATE = 16000
 RESPEAKER_CHANNELS = 2 
 RESPEAKER_WIDTH = 2
-RESPEAKER_INDEX = 0  # refer to input device id
 CHUNK = 1024
 RECORD_SECONDS = 5
 WAVE_OUTPUT_FILENAME = "recorded_audio.wav"
-EXTRACT_CHANNEL = 0
+# Refer to input device ID by running recordAudio.getAudioDeviceInfo()
+RESPEAKER_INDEX = 0
+# Extract data for specific channelel. 
+# Channel 1 set it to 0
+# channel 2 set it to 1
+# If no extracted channel set it to None
+EXTRACT_CHANNEL = None
+
+# Run get audio device infos.
+recordAudio.getAudioDeviceInfo()
 
 # Run record audio
 recordAudio.record(RESPEAKER_RATE,RESPEAKER_CHANNELS,RESPEAKER_WIDTH, 
