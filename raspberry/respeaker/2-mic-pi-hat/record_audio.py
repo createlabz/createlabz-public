@@ -78,9 +78,10 @@ class RecordAudio:
 # Print Start of test
 print("ReSpeaker 2-Mic Pi Audio test")
 
-# Test
+# Test of audio recording
 recordAudio = RecordAudio()
 
+# Run get audio device infos.
 recordAudio.getAudioDeviceInfo()
 
 # Audio Settings
@@ -93,6 +94,7 @@ RECORD_SECONDS = 5
 WAVE_OUTPUT_FILENAME = "recorded_audio.wav"
 EXTRACT_CHANNEL = 0
 
+# Run record audio
 recordAudio.record(RESPEAKER_RATE,RESPEAKER_CHANNELS,RESPEAKER_WIDTH, 
 RESPEAKER_INDEX, CHUNK, RECORD_SECONDS, 
 WAVE_OUTPUT_FILENAME, EXTRACT_CHANNEL)
