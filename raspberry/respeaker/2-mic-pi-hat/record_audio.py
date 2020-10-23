@@ -111,7 +111,7 @@ recordAudio.record(RESPEAKER_RATE,RESPEAKER_CHANNELS,RESPEAKER_WIDTH,
 RESPEAKER_INDEX, CHUNK, RECORD_SECONDS, 
 WAVE_OUTPUT_FILENAME, EXTRACT_CHANNEL)
 
-print("Playing recorded sound..")
+print("Playing recorded audio..")
 
 # Play recorded audio
 recordAudio.playAudio(WAVE_OUTPUT_FILENAME)
