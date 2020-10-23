@@ -104,7 +104,7 @@ RESPEAKER_INDEX = 0
 EXTRACT_CHANNEL = None
 
 # Run get audio device infos.
-# recordAudio.getAudioDeviceInfo()
+recordAudio.getAudioDeviceInfo()
 
 # Run record audio
 recordAudio.record(RESPEAKER_RATE,RESPEAKER_CHANNELS,RESPEAKER_WIDTH, 
