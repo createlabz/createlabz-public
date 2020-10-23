@@ -1,6 +1,7 @@
 import pyaudio
 import wave
 import numpy as np
+from subprocess import call
 
 class RecordAudio:
     '''
@@ -75,6 +76,12 @@ class RecordAudio:
                 if (self.pyaud.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
                     print("Input Device id ", i, " - ", self.pyaud.get_device_info_by_host_api_device_index(0, i).get('name'))
 
+    def playAudio(self, fileName):
+        '''
+            Play Audio through aplay
+        '''
+        call(["aplay", fileName])
+
 # Print Start of test
 print("ReSpeaker 2-Mic Pi Audio test")
 
@@ -97,9 +104,14 @@ RESPEAKER_INDEX = 0
 EXTRACT_CHANNEL = None
 
 # Run get audio device infos.
-recordAudio.getAudioDeviceInfo()
+# recordAudio.getAudioDeviceInfo()
 
 # Run record audio
 recordAudio.record(RESPEAKER_RATE,RESPEAKER_CHANNELS,RESPEAKER_WIDTH, 
 RESPEAKER_INDEX, CHUNK, RECORD_SECONDS, 
 WAVE_OUTPUT_FILENAME, EXTRACT_CHANNEL)
+
+print("Playing recorded sound..")
+
+# Play recorded audio
+recordAudio.playAudio(WAVE_OUTPUT_FILENAME)
