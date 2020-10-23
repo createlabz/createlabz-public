@@ -9,6 +9,7 @@ strip = apa102.APA102(num_led=3, global_brightness=20, mosi=10, sclk=11,
 strip.clear_strip()
 
 # Prepare a few individual pixels
+# strip.set_pixel_rgb(LED #, Color Value)
 strip.set_pixel_rgb(0, 0xFF0000)  # Red
 strip.set_pixel_rgb(1, 0xFFFFFF)  # White
 strip.set_pixel_rgb(2, 0x00FF00)  # Green
