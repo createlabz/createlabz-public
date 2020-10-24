@@ -1,7 +1,7 @@
 # Up/Down Counter using 74HC595 and 7-segment Display
 > A simple arduino project that uses push buttons and 74HC595 to drive the 7-Segment Display.
 
-##Table of contents
+## Table of contents
 * [General information](#general-information)
 * [Hardware needed](#hardware-needed)
 * [Setup](#setup)
