@@ -35,10 +35,10 @@ To-do:
 * Make use of the other components found on the Arduino Kit
 
 ## Status
-Project is: _blog post_
+Project is: _complete_
 
 ## Contact
-Created by Kristine Valderosa 
+Created by Kristine Valderosa (DragonClawz or RandomEpicFails in Minecraft Plugin Forums)
 
 krisval1008@gmail.com
 
