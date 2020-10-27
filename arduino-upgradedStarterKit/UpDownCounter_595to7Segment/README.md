@@ -23,7 +23,7 @@ This project was created as part of the Arduino Upgraded Kit tutorials for creat
 * Jumper Cables
 
 ## Setup
-For a detailed instruction on how to recreate this project, head on to this [blogpost](input) .
+For a detailed instruction on how to recreate this project, head on to this [blogpost](https://createlabz-store.myshopify.com/blogs/createlabz-tutorials/0-9-arduino-up-down-counter-with-74hc595-and-7-segment-display) .
 
 More projects can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
