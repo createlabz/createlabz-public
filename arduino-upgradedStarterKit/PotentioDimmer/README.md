@@ -1,7 +1,7 @@
 # LED Dimmer using Potentiometer
 > A simple arduino project that enables a potentiometer to dim an LED.
 
-##Table of contents
+## Table of contents
 * [General information](#general-information)
 * [Hardware needed](#hardware-needed)
 * [Setup](#setup)

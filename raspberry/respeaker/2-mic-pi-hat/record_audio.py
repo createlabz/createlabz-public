@@ -97,7 +97,7 @@ RECORD_SECONDS = 5
 WAVE_OUTPUT_FILENAME = "recorded_audio.wav"
 # Refer to input device ID by running recordAudio.getAudioDeviceInfo()
 RESPEAKER_INDEX = 0
-# Extract data for specific channelel. 
+# Extract data for specific channel. 
 # Channel 1 set it to 0
 # channel 2 set it to 1
 # If no extracted channel set it to None
