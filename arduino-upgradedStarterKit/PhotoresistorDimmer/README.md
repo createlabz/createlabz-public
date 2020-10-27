@@ -22,7 +22,7 @@ This project was created as part of the Arduino Upgraded Kit tutorials for creat
 * Jumper Cables
 
 ## Setup
-For a detailed instruction on how to recreate this project, head on to this [blogpost](https://store.createlabz.com/blogs/news/controlling-an-led-2-5-adjusting-led-brightness-using-a-photoresistor) .
+For a detailed instruction on how to recreate this project, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/controlling-an-led-2-5-adjusting-led-brightness-using-a-photoresistor) .
 
 More projects can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
