@@ -1,3 +1,10 @@
+/* 
+ *  Created: October 2020
+ *  Nolf Ivan C. Labios
+ *  Adjusting LED brightness using photoresistor
+ *  Part 2 of Controlling an LED series
+ */
+
 const int LED = 9; // set pin for led
 const int LDR = A1; //set pin for photoresistor
 

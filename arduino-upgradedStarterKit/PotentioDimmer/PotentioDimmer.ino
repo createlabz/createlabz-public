@@ -1,3 +1,10 @@
+/* 
+ *  Created: October 2020
+ *  Nolf Ivan C. Labios
+ *  Adjusting LED brightness using potentiometer
+ *  Part 1 of Controlling an LED series
+ */
+
 const int POT = A0; //analog input pin for potentiometer
 const int LED = 9; //input pin for LED
 
