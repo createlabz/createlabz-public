@@ -1,9 +1,3 @@
-/*
- * Created: October 2020
- * by Nolf Ivan C. Labios
- * Potentiometer controlled LEDs with buzzer
-*/
-
 /* 
  *  Created: October 2020
  *  Nolf Ivan C. Labios
