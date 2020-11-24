@@ -10,7 +10,7 @@
 * [Contact](#contact)
 
 ## General information
-This project was created as part of the Arduino Upgraded Kit tutorials for createlabz. This is the final project of the Controlling LED series tutorial which automates an air pump with the use of relay. The water level sensor is used as an input where its specific values control how the relay will operate. In order to make the LED indicator work, the water level sensor needs to be calibrated.
+This project was created as part of the Arduino Upgraded Kit tutorials for createlabz. This is the final project of the Controlling LED series tutorial which uses a water level sensor, LEDs as water level indicators and a relay module to control an air pump. The water level sensor is used as an input where its specific values control how the relay will operate. In order to make the LED indicator work, the water level sensor needs to be calibrated.
 
 ## Hardware needed
 * Arduino Uno
