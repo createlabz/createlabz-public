@@ -1,4 +1,4 @@
-# Arduino Password-based Door Lock using 4x4 keypad, 9g Servomotor, 74HC595, and 4-digit display tube
+# Arduino Password-based Door Lock
 > A simple Arduino DIY Home Automation System
 
 ## Table of contents
