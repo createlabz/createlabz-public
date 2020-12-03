@@ -88,7 +88,6 @@ void displayNumber() {
         strcat( keyNum, addKey.c_str() );
         sevseg.setChars(keyNum);
         sevseg.refreshDisplay();
-        Serial.println(keyNum);
       }
       if (customKey=='D'){
         keyPress();
