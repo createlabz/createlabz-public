@@ -184,9 +184,6 @@ void clearSevDisplay() {
   sevseg.refreshDisplay();
 }
 
-void startup(){
-}
-
 void keyPress() {
   tone(buzz,500);
   delay(50);
