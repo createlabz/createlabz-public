@@ -24,7 +24,7 @@ This project was created as part of the Arduino Upgraded Kit tutorials for creat
 * Jumper Cables
 
 ## Setup
-For a detailed instruction on how to recreate this project, head on to this [blogpost](TBA) .
+For a detailed instruction on how to recreate this project, head on to this [blogpost](https://createlabz-store.myshopify.com/blogs/createlabz-tutorials/arduino-password-based-door-lock-using-4x4-keypad-9g-servomotor-74hc595-and-4-digit-display-tube) .
 
 More projects can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
@@ -35,7 +35,7 @@ To-do:
 * Make use of the other components found on the Arduino Kit
 
 ## Status
-Project is: _for checking_
+Project is: _complete_
 
 ## Contact
 Created by Kristine Valderosa (DragonClawz or RandomEpicFails in Minecraft Plugin Forums)
