@@ -1,5 +1,5 @@
-# Up/Down Counter using 74HC595 and 7-segment Display
-> A simple arduino project that uses push buttons and 74HC595 to drive the 7-Segment Display.
+# Arduino Password-based Door Lock using 4x4 keypad, 9g Servomotor, 74HC595, and 4-digit display tube
+> A simple Arduino DIY Home Automation System
 
 ## Table of contents
 * [General information](#general-information)
