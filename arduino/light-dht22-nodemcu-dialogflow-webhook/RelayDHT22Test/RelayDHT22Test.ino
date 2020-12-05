@@ -1,4 +1,4 @@
-// Light and temperature control via AdaFruit
+// Relay State Changing and DHT22 Test
 // Written by jeminico (Createlabz)
 
 /************************ Relay Configuration *******************************/
@@ -6,7 +6,8 @@
 int relayPin = 15;
 // Relay State
 int state = LOW;
-long relayTimer,tempTimer;
+// Timer delay for changing state
+long relayTimer;
 const long relayTimerDelay = 5000;
 
 /************************ DHT Sensor Configuration *******************************/
@@ -19,7 +20,7 @@ const long relayTimerDelay = 5000;
 #include "DHT.h"
 
  // Digital pin connected to the DHT sensor
-#define DHTPIN 2    
+#define DHTPIN 4    
 // Feather HUZZAH ESP8266 note: use pins 3, 4, 5, 12, 13 or 14 --
 // Pin 15 can work but DHT must be disconnected during program upload.
 
@@ -40,118 +41,66 @@ const long relayTimerDelay = 5000;
 // tweak the timings for faster processors.  This parameter is no longer needed
 // as the current DHT reading algorithm adjusts itself to work on faster procs.
 DHT dht(DHTPIN, DHTTYPE);
-
+float humid,tempCelc,tempFaren;
 // Timer delay for reading temperature
-const long tempTimerDelay = 1000;
+long tempTimer;
+const long tempTimerDelay = 2000;
 
 
-/************************ Adafruit IO Configuration *******************************/
-#include <ESP8266WiFi.h>
-#include <AdafruitIO.h>
-#include <Adafruit_MQTT.h>
-#include <ArduinoHttpClient.h>
-#include "AdafruitIO_WiFi.h"
-
-// visit io.adafruit.com if you need to create an account,
-// or if you need your Adafruit IO key.
-#define IO_USERNAME    "YOUR_IO_USERNAME"
-#define IO_KEY         "YOUR_IO_KEY"
-// Wifi Configuration
-#define WIFI_SSID       "YOUR_WIFI_SSID"
-#define WIFI_PASS       "YOUR_WIFI_PASS"
-// Initialize Adafruit IO wifi
-AdafruitIO_WiFi io(IO_USERNAME, IO_KEY, WIFI_SSID, WIFI_PASS);
-
-// Set up the 'command' feed
-AdafruitIO_Feed *command = io.feed("COMMAND FEED");
-
-// Setup function
 void setup() {
-  // Start of initialization
-  Serial.println("Initializing Setup..");
+  // put your setup code here, to run once:
   // Initialize Serial
   Serial.begin(9600);
-  
+
   // Initialize relay
   Serial.println("Initializing Relay..");
   pinMode(relayPin, OUTPUT);
-  relayTimer = millis();
   
   // Initialize DHT Sensor
   Serial.println("Initializing DHT Sensor..");
   dht.begin();
-  tempTimer = millis();
-  
-   // connect to io.adafruit.com
-  Serial.println("Initializing Adafruit IO..");
-  io.connect();
-  // set up a message handler for the 'command' feed.
-  // the handleMessage function (defined below)
-  // will be called whenever a message is
-  // received from adafruit io.
-  command->onMessage(handleMessage);
-  // wait for a connection
-  while(io.status() < AIO_CONNECTED) {
-    Serial.print(".");
-    delay(500);
-  }
-  // we are connected
-  Serial.println();
-  Serial.println(io.statusText());
 
-  Serial.println("Done Initializing Setup!");
+   // Print done initialize
+   Serial.print("Done initializing.. ");
 }
 
-// Main function
 void loop() {
-//  changeStateRelay();
+  // put your main code here, to run repeatedly:
   readTemp();
-  io.run();
-}
-
-// Change state of the Relay
-void changeStateRelay(){
-  // Timer to change state
-  if(millis() <= relayTimer + relayTimerDelay) return;
-  relayTimer = millis();
-  // Set state of relay
-  if(state == LOW) state = HIGH;
-  else state = LOW;
-  digitalWrite(relayPin, state);
-  Serial.println("Relay Change State");
+  changeStateRelay();
 }
 
 // Read Temperature
 void readTemp(){
+  // Timer to read temperature
   if(millis() <= tempTimer + tempTimerDelay) return;
   tempTimer = millis();
-  
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
-  float h = dht.readHumidity();
+  humid = dht.readHumidity();
   // Read temperature as Celsius (the default)
-  float t = dht.readTemperature();
+  tempCelc = dht.readTemperature();
   // Read temperature as Fahrenheit (isFahrenheit = true)
-  float f = dht.readTemperature(true);
+  tempFaren = dht.readTemperature(true);
 
   // Check if any reads failed and exit early (to try again).
-  if (isnan(h) || isnan(t) || isnan(f)) {
+  if (isnan(humid) || isnan(tempCelc) || isnan(tempFaren)) {
     Serial.println(F("Failed to read from DHT sensor!"));
     return;
   }
 
   // Compute heat index in Fahrenheit (the default)
-  float hif = dht.computeHeatIndex(f, h);
+  float hif = dht.computeHeatIndex(tempFaren, humid);
   // Compute heat index in Celsius (isFahreheit = false)
-  float hic = dht.computeHeatIndex(t, h, false);
+  float hic = dht.computeHeatIndex(tempCelc, humid, false);
 
   // Display DHT Sensor reading values
   Serial.print(F("Humidity: "));
-  Serial.print(h);
+  Serial.print(humid);
   Serial.print(F("%  Temperature: "));
-  Serial.print(t);
+  Serial.print(tempCelc);
   Serial.print(F("°C "));
-  Serial.print(f);
+  Serial.print(tempFaren);
   Serial.print(F("°F  Heat index: "));
   Serial.print(hic);
   Serial.print(F("°C "));
@@ -159,16 +108,16 @@ void readTemp(){
   Serial.println(F("°F"));
 }
 
-// Handle Adafruit message.
-void handleMessage(AdafruitIO_Data *data) {
-  int command = data->toInt();
-  if (command == 1){ //light up the LED
-    Serial.print("received <- ");
-    Serial.println(command);
-    digitalWrite(relayPin, HIGH);  
-  } else {
-    Serial.print("received <- ");
-    Serial.println(command);
-    digitalWrite(relayPin, LOW);
-  }
+// Change state of the Relay
+void changeStateRelay(){
+  // Timer to change state
+  if(millis() <= relayTimer + relayTimerDelay) return;
+  relayTimer = millis();
+  
+  // Set state of relay
+  if(state == LOW) state = HIGH;
+  else state = LOW;
+  digitalWrite(relayPin, state);
+  Serial.print("Relay Change State to ");
+  Serial.println(state);
 }
