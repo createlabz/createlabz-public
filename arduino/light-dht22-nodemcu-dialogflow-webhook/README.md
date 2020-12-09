@@ -33,7 +33,7 @@ More projects or guides can be found in [KnowledgeBase and Tutorials](https://st
 
 
 ## Status
-Project is: _in-progress_
+Project is: _finished_
 
 ## Contact
 Created by Creal Gerd Jeminico
