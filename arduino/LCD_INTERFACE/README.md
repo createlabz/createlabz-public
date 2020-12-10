@@ -20,7 +20,7 @@ Liquid crystal displays (LCDs) are commonly used for displaying data in devices 
 * Jumper Cables
 
 ## Setup
-For a detailed instruction on how to recreate this project, head on to this [blogpost]() .
+For a detailed instruction on how to recreate this project, head on to this [blogpost](https://fgxsjyyown0qjltp-26018644031.shopifypreview.com/blogs/createlabz-tutorials/articles?preview_key=4400f5e6737317b169e50adba819758b) .
 
 More projects can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
