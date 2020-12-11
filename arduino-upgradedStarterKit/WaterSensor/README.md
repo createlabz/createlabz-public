@@ -1,5 +1,5 @@
-# Water Level Sensor with LED Indicator and Relay
-> An Arduino project automating an air pump with the use of relay as output and water level sensor as input.
+# Water Level Sensor with LED Indicator and Relay Control
+> An Arduino project using LEDs as water level indicators, a relay to automate an air pump, and water level sensor as input.
 
 ## Table of contents
 * [General information](#general-information)
@@ -10,7 +10,7 @@
 * [Contact](#contact)
 
 ## General information
-This project was created as part of the Arduino Upgraded Kit tutorials for createlabz. This is the final project of the Controlling LED series tutorial which automates an air pump with the use of relay. The water level sensor is used as an input where its specific values control how the relay will operate. In order to make the LED indicator work, the water level sensor needs to be calibrated.
+This project was created as part of the Arduino Upgraded Kit tutorials for createlabz. This is the final project of the Controlling LED series tutorial which uses a water level sensor, LEDs as water level indicators and a relay module to control an air pump. The water level sensor is used as an input where its specific values control how the relay will operate. In order to make the LED indicator work, the water level sensor needs to be calibrated.
 
 ## Hardware needed
 * Arduino Uno
@@ -28,6 +28,7 @@ For a detailed instruction on how to recreate this project, head on to this [blo
 More projects can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
 ## Features
+* LED as water level indicators
 * Automate air pump
 * Calibrate Water level sensor
 * Understand how relay works
