@@ -1,5 +1,5 @@
-# Potentiometer controlled LEDS with buzzer
-> An arduino project which makes use of an LED to indicate potentiometer value level with buzzer attached.
+# Potentiometer controlled LEDS 
+> An arduino project which makes use of an LED to indicate potentiometer value level with an additional feature, the buzzer to indicate if the value is at maximum.
 
 ## Table of contents
 * [General information](#general-information)
