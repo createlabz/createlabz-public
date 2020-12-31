@@ -1,4 +1,4 @@
-# Joystick Servomotor & Stepper Motor Controller
+# Arduino Joystick Motor Control
 > Control a servomotor and a stepper motor with a XY Joystick
 
 ## Table of contents
