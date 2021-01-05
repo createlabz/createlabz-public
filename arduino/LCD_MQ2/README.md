@@ -22,6 +22,9 @@ Let your next Arduino project be your extended sensitive nose for identifying di
 * Jumper Cables
 * Mq2 sensor
 
+## Software needed
+* library used (https://github.com/olikraus/u8glib and https://github.com/labay11/MQ-2-sensor-library)
+
 ## Setup
 For a detailed instruction on how to recreate this project, head on to this [blogpost] .
 More projects can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
