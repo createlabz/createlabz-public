@@ -28,7 +28,7 @@
 *library used in this project (https://github.com/olikraus/u8glib) 
 
 ## Setup
-For a detailed instruction on how to recreate this project, head on to this [blogpost]()
+For a detailed instruction on how to recreate this project, head on to this [https://store.createlabz.com/blogs/createlabz-tutorials/interfacing-128-x-64-lcd-module-with-arduino-2-3-snake-game-using-tactile-push-button-switches]()
 More projects can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
 ## Features

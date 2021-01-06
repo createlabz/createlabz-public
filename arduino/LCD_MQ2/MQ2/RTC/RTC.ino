@@ -59,7 +59,7 @@ digitalWrite(G_led, HIGH); // Turn LED on.
    u8g.firstPage();  
   }
 
-  if  (smoke > 0){ 
+  if  (smoke > 0 && lpg > 0){ 
      u8g.firstPage();  
   do {
      u8g.drawFrame(0,0,128,31);         
@@ -108,18 +108,6 @@ void setup(void) {
  clearLCD();
   // rebuild the picture after some delay
   delay(50);
-  
-  // assign default color value
-  if ( u8g.getMode() == U8G_MODE_R3G3B2 ) {
-    u8g.setColorIndex(255);     // white
-  }
-  else if ( u8g.getMode() == U8G_MODE_GRAY2BIT ) {
-    u8g.setColorIndex(3);         // max intensity
-  }
-  else if ( u8g.getMode() == U8G_MODE_BW ) {
-    u8g.setColorIndex(1);         // pixel on
-  }
-  else if ( u8g.getMode() == U8G_MODE_HICOLOR ) {
-    u8g.setHiColorByRGB(255,255,255);
+
   }
 }

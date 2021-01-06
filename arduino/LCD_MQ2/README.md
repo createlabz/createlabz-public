@@ -26,7 +26,7 @@ Let your next Arduino project be your extended sensitive nose for identifying di
 * library used (https://github.com/olikraus/u8glib and https://github.com/labay11/MQ-2-sensor-library)
 
 ## Setup
-For a detailed instruction on how to recreate this project, head on to this [blogpost] .
+For a detailed instruction on how to recreate this project, head on to this [https://store.createlabz.com/blogs/createlabz-tutorials/interfacing-128-x-64-lcd-module-with-arduino-3-3-mq2-gas-smoke-sensor] .
 More projects can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
 ## Features
