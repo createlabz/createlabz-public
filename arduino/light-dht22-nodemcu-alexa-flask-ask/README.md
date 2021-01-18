@@ -24,7 +24,7 @@ This source code was developed as a guide on how to setup of Flask-Ask applicati
 * Router (For WiFi Connection)
 
 ## Setup
-For a detailed instruction on how to control a relay switch connected to a light bulb and read temperature with DHT22 sensor using NodeMCU, Alexa Skill, Flask-Ask, ngrok, HTTP Request, and Amazon Alexa together with Raspberry Pi and ReSpeaker 4-Mics Pi Hat, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/respeaker-2-mics-pi-hat-with-raspberry-pi) .
+For a detailed instruction on how to control a relay switch connected to a light bulb and read temperature with DHT22 sensor using NodeMCU, Alexa Skill, Flask-Ask, ngrok, HTTP Request, and Amazon Alexa together with Raspberry Pi and ReSpeaker 4-Mics Pi Hat, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/amazon-alexa2-2-voice-activated-sensor-reading-and-light-control-using-nodemcu-and-raspberry-pi-with-amazon-alexa-and-alexa-skill) .
 
 More projects or guides can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
