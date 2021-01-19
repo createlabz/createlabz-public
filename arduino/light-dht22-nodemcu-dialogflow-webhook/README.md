@@ -24,7 +24,7 @@ This source code was developed as a guide on how to control a relay switch conne
 * Router (For WiFi Connection)
 
 ## Setup
-For a detailed instruction on how to control a relay switch connected to a light bulb and read temperature with DHT22 sensor using NodeMCU, Dialogflow, webhook,flask, ngrok, HTTP Request, and Google Assistant together with Raspberry Pi and ReSpeaker 4-Mics Pi Hat, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/respeaker-2-mics-pi-hat-with-raspberry-pi) .
+For a detailed instruction on how to control a relay switch connected to a light bulb and read temperature with DHT22 sensor using NodeMCU, Dialogflow, webhook,flask, ngrok, HTTP Request, and Google Assistant together with Raspberry Pi and ReSpeaker 4-Mics Pi Hat, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/google-assistant4-4-voice-activated-light-control-and-reading-of-temperature-using-nodemcu-with-google-assistant-dialogflow-and-raspberry-pi).
 
 More projects or guides can be found in [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
