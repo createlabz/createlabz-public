@@ -1,3 +1,7 @@
+/*
+ * LinkIt One: Vehicle Tracker using GPS and MediaTek Cloud
+ * create by jeminico
+ */
 /************************ GPS Initialization Setup *******************************/
 #include <LGPS.h>
 #include "GPSWaypoint.h"
@@ -34,9 +38,9 @@ unsigned long responseTime;
 const unsigned long max_response_time = 15000;
 
 // Mediatek parameters
-#define DEVICE_ID "D0r48ArZ"
-#define DEVICE_KEY "0lu95lCEu50FBSh0"
-#define GPS_DATA_ID "gps01"
+#define DEVICE_ID "YOUR_DEVICE_ID"
+#define DEVICE_KEY "YOUR_DEVICE_KEY"
+#define GPS_DATA_ID "YOUR_GPS_DATA_ID"
 
 // Link-It-One LED built in pin
 #define LED_BUILT_IN 13
