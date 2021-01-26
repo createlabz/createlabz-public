@@ -23,7 +23,7 @@ In this tutorial, we will be using a 32x8 LED Matrix to display messages. The me
 * [Bluetooth Terminal HC-05](https://play.google.com/store/apps/details?id=project.bluetoothterminal) (on Google Play Store)
 
 ## Setup
-For detailed instructions on how to recreate this project, head on to this [blogpost]() .
+For detailed instructions on how to recreate this project, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/32x8-led-matrix-message-display-using-bluetooth) .
 
 More projects can be found in the [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
