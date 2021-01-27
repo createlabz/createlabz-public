@@ -58,5 +58,6 @@ void loop() {
   //  Oled.print("DHT Temp: ");
   //  Oled.print(Environment.readTemperature());
   //  Oled.print("C");
+  Oled.refreshDisplay();
   delay(1000);
 }
