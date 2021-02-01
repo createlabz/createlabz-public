@@ -42,11 +42,12 @@ void setup() {
   // Set true to flip display if not false.
   Oled.setFlipMode(false);
 
+  // Start Barometer air pressure Sensor
+  Pressure.begin();
+
   // Start DHT Temperature and Humidity Sensor
   Environment.begin();
-
-  // Start Barometer pressure Sensor
-  Pressure.begin();
+  
 }
 
 void loop() {
@@ -86,15 +87,6 @@ void loop() {
   delay(delayTime);
 }
 
-void getTime() {
-  // Convert milliseconds to seconds.
-  seconds = (millis() / 1000l) % 60;
-  // Convert milliseconds to minutes.
-  minutes = (millis() / (1000l * 60l)) % 60;
-  // Convert milliseconds to hours.
-  hours = (millis() / (1000l * 60l * 60l)) % 24;
-}
-
 void displayTemperature() {
   // Set cursor (2nd Line)
   Oled.setCursor(0, 1);
@@ -104,18 +96,9 @@ void displayTemperature() {
   Oled.print(" C");
 }
 
-void displayHumidity() {
-  // Set cursor (3rd Line)
-  Oled.setCursor(0, 2);
-  // Get and Display DHT Humidity Sensor data.
-  Oled.print("Humid: ");
-  Oled.print(Environment.readHumidity());
-  Oled.print(" %");
-}
-
 void displayPressure() {
-  // Set cursor (4th Line)
-  Oled.setCursor(0, 3);
+  // Set cursor 3rd line
+  Oled.setCursor(0, 2);
   // Get and display Barometer atmospheric pressure sensor data (in hecto Pascal).
   Oled.print("Pre: ");
   // Get sea pressure
@@ -128,14 +111,43 @@ void displayPressure() {
 }
 
 void displayAltitude() {
-  // Set cursor (5th Line)
-  Oled.setCursor(0, 4);
+  // Set cursor 4th Line
+  Oled.setCursor(0, 3);
   // Get and display altitude sensor data
   Oled.print("Alt: ");
   Oled.print(Pressure.readAltitude());
   Oled.print(" m");
 }
 
+void displayHumidity() {
+  // Set cursor 5th line
+  Oled.setCursor(0, 4);
+  // Get and Display DHT Humidity Sensor data.
+  Oled.print("Humid: ");
+  Oled.print(Environment.readHumidity());
+  Oled.print(" %");
+}
+
+
+/************************This is Zambretti Algorithm for weather forecasting.  *******************************/
+/**
+   For more information on the Zambretti Algorithm you may check this links:
+   https://communities.sas.com/t5/SAS-Analytics-for-IoT/Zambretti-Algorithm-for-Weather-Forecasting/td-p/679487#
+
+   This codes are base on and modified:
+   https://github.com/fandonov/weatherstation/blob/master/weather-station/weather-station.ino
+*/
+// Time Since boot
+void getTime() {
+  // Convert milliseconds to seconds.
+  seconds = (millis() / 1000l) % 60;
+  // Convert milliseconds to minutes.
+  minutes = (millis() / (1000l * 60l)) % 60;
+  // Convert milliseconds to hours.
+  hours = (millis() / (1000l * 60l * 60l)) % 24;
+}
+
+// Display time since boot
 void displayTime() {
   // Set cursor (6th Line)
   Oled.setCursor(0, 5);
@@ -154,14 +166,7 @@ void displayTime() {
   Oled.print(seconds);
 }
 
-/************************This is Zambretti Algorithm for weather forecasting.  *******************************/
-/**
-   For more information on the Zambretti Algorithm you may check this links:
-   https://communities.sas.com/t5/SAS-Analytics-for-IoT/Zambretti-Algorithm-for-Weather-Forecasting/td-p/679487#
 
-   This codes are base on and modified:
-   https://github.com/fandonov/weatherstation/blob/master/weather-station/weather-station.ino
-*/
 void getSeaPressure() {
   // Store sea pressure every minute (if isCalibDoneSec is true storing will be in seconds)
   if (minutes != lastRecPresMin or isCalibDoneSec) {
