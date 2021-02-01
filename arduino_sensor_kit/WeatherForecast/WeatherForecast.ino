@@ -1,14 +1,17 @@
 #include "Arduino_SensorKit.h"
 
-// Time since program run
-unsigned long seconds, minutes, hours;
+// Sensors data value
+float temperature, airPressure, altitude, humidity, seaPressure;
 
 // Time delay
 unsigned long delayTime = 1000;
 
+// Time since program run
+unsigned long seconds, minutes, hours;
+
 // Parameters for detecting forecast
 // Store pressure values(Max 10)
-int pressureArray[10] = {0};
+int seaPressureArray[10] = {0};
 // Store the minute of last recorded pressure
 int lastRecPresMin = 0;
 // Store the hour of last recorded pressure
@@ -40,7 +43,7 @@ void setup() {
   // Start OLED Display
   Oled.begin();
   // Set true to flip display if not false.
-  Oled.setFlipMode(false);
+  Oled.setFlipMode(true);
 
   // Start Barometer air pressure Sensor
   Pressure.begin();
@@ -52,7 +55,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  
   // Get current time (Since program run)
   getTime();
 
@@ -63,6 +66,12 @@ void loop() {
   // Print Weather Forecast header text
   Oled.print("Weather Forecast");
 
+  // Get sensors data
+  getSensorsData();
+
+  // Get sea pressure and display forecast
+  getSeaPressure();
+  
   // Display temperature to OLED Screen
   displayTemperature();
 
@@ -78,53 +87,62 @@ void loop() {
   // Display time to OLED Screen (Since Program run)
   displayTime();
 
-  // Display forecast
-  getSeaPressure();
-
   // Update display
   Oled.refreshDisplay();
 
   delay(delayTime);
 }
 
+void getSensorsData(){
+  temperature = Pressure.readTemperature(); // Temperature in celcius
+  airPressure = Pressure.readPressure() / 100; // Air pressure in hecto pascal (hPa)
+  altitude = Pressure.readAltitude() / 100; // Altitude in meter
+  humidity = Environment.readHumidity(); // Humidity in percentage
+}
+
 void displayTemperature() {
-  // Set cursor (2nd Line)
+  // Set cursor 2nd Line
   Oled.setCursor(0, 1);
-  // Get and print Barometer temperature sensor data (in Celcius).
+  // Print label
   Oled.print("Temp: ");
-  Oled.print(Pressure.readTemperature());
+  // Print temperature in celcius
+  Oled.print(temperature);
+  // Print unit
   Oled.print(" C");
 }
 
 void displayPressure() {
   // Set cursor 3rd line
   Oled.setCursor(0, 2);
-  // Get and display Barometer atmospheric pressure sensor data (in hecto Pascal).
+  // Print label
   Oled.print("Pre: ");
-  // Get sea pressure
-  int seapressure = stationToSeaLevel((Pressure.readPressure() / 100), Pressure.readAltitude(), Pressure.readTemperature());
-  //  // Convert atmospheric pressure from pascal (Pa) to hecto pascal (hPa)
-  //  float atmHpa = Pressure.readPressure() / 100;
-  Oled.print(seapressure);
+  // Print air pressure in hecto pascal (hPa)
+//  Oled.print(airPressure);
+  // Print sea pressure in hecto pascal (hPa)
+  Oled.print(seaPressure);
+  // Print unit
   Oled.print(" hPa");
-
 }
 
 void displayAltitude() {
   // Set cursor 4th Line
   Oled.setCursor(0, 3);
-  // Get and display altitude sensor data
+  // Print label
   Oled.print("Alt: ");
-  Oled.print(Pressure.readAltitude());
+  // Print alitude in meter
+  Oled.print(altitude);
+  // Printer unit
   Oled.print(" m");
 }
 
 void displayHumidity() {
   // Set cursor 5th line
   Oled.setCursor(0, 4);
-  // Get and Display DHT Humidity Sensor data.
+  // Print label
   Oled.print("Humid: ");
-  Oled.print(Environment.readHumidity());
+  // Print humidity in percentage
+  Oled.print(humidity);
+  // Print unit
   Oled.print(" %");
 }
 
@@ -171,15 +189,15 @@ void getSeaPressure() {
   // Store sea pressure every minute (if isCalibDoneSec is true storing will be in seconds)
   if (minutes != lastRecPresMin or isCalibDoneSec) {
     // Get sea pressure
-    int seapressure = stationToSeaLevel((Pressure.readPressure() / 100), Pressure.readAltitude(), Pressure.readTemperature());
+    seaPressure = stationToSeaLevel((Pressure.readPressure() / 100), Pressure.readAltitude(), Pressure.readTemperature());
     
     // Store sea pressure
     if (recPresCounter >= 10) {
       doneCalibForecast = true;
-      for (int i = 0; i < 9; i++) pressureArray[i] = pressureArray[i + 1];
-      pressureArray[recPresCounter - 1] = seapressure;
+      for (int i = 0; i < 9; i++) seaPressureArray[i] = seaPressureArray[i + 1];
+      seaPressureArray[recPresCounter - 1] = seaPressure;
     } else {
-      pressureArray[recPresCounter] = seapressure;
+      seaPressureArray[recPresCounter] = seaPressure;
       recPresCounter++;
     }
     
@@ -199,16 +217,16 @@ void getDisplayForecast() {
   // Forecast already calibrated
   else {
     // Get forecast number base on Zambretti Algorithm
-    int Z = calculateZambretti((pressureArray[9] + pressureArray[8] + pressureArray[7]) / 3, (pressureArray[0] + pressureArray[1] + pressureArray[2]) / 3, monthNow);
+    int Z = calculateZambretti((seaPressureArray[9] + seaPressureArray[8] + seaPressureArray[7]) / 3, (seaPressureArray[0] + seaPressureArray[1] + seaPressureArray[2]) / 3, monthNow);
     // Rising
-    if (pressureArray[9] + pressureArray[8] + pressureArray[7] - pressureArray[0] - pressureArray[1] - pressureArray[2] >= 3) {
+    if (seaPressureArray[9] + seaPressureArray[8] + seaPressureArray[7] - seaPressureArray[0] - seaPressureArray[1] - seaPressureArray[2] >= 3) {
       if (Z < 3) displayForecast(SUN);
       else if (Z >= 3 and Z <= 9) displayForecast(SUN_CLOUD);
       else if (Z > 9 and Z <= 17) displayForecast(CLOUD);
       else if (Z > 17) displayForecast(RAIN);
     }
     // Falling
-    else if (pressureArray[0] + pressureArray[1] + pressureArray[2] - pressureArray[9] - pressureArray[8] - pressureArray[7] >= 3) {
+    else if (seaPressureArray[0] + seaPressureArray[1] + seaPressureArray[2] - seaPressureArray[9] - seaPressureArray[8] - seaPressureArray[7] >= 3) {
       if (Z < 4) displayForecast(SUN);
       else if (Z >= 4 and Z < 14) displayForecast(SUN_CLOUD);
       else if (Z >= 14 and Z < 19)displayForecast(THUNDER);
