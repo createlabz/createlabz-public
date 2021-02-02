@@ -1,10 +1,8 @@
 #include "Arduino_SensorKit.h"
 
-// Sensors data value
-float temperature, airPressure, altitude, humidity, seaPressure;
+unsigned long delayTime = 1000; // 1 second delay time
 
-// Time delay
-unsigned long delayTime = 1000;
+float temperature, airPressure, altitude, humidity, seaPressure;
 
 // Time since program run
 unsigned long seconds, minutes, hours;
@@ -19,7 +17,7 @@ int lastRecPresHr = 0;
 // Counter for recorded pressure
 int recPresCounter = 0;
 // Current month (Ex: January = 1 & December = 12)
-int monthNow = 1;
+int monthNow = 1; // Current month is january
 // Identifier if first calibration is already done
 bool doneCalibForecast = false;
 // Set true if calibration is done in seconds
@@ -36,122 +34,101 @@ bool isCalibDoneSec = true;
 
 void setup() {
   // put your setup code here, to run once:
-
-  // Start serial for debugging
-  Serial.begin(9600);
-
-  // Start OLED Display
+  // Initialize OLED diplay
   Oled.begin();
-  // Set true to flip display if not false.
-  Oled.setFlipMode(true);
+  // Set OLED Display mode
+  Oled.setFlipMode(true); // If true rotates the display to 180 degrees
 
-  // Start Barometer air pressure Sensor
+  // Initialize Air Pressure Sensor
   Pressure.begin();
 
-  // Start DHT Temperature and Humidity Sensor
+  // Initialize DHT temperature and humidity sensor
   Environment.begin();
-  
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  
-  // Get current time (Since program run)
+
+  // Get time since boot
   getTime();
 
-  // Set OLED font type
+  // OLED Font type
   Oled.setFont(u8x8_font_chroma48medium8_r);
-  // Set starting cursor (1st Line)
-  Oled.setCursor(0, 0);
-  // Print Weather Forecast header text
+
+  // Set starting cursor
+  Oled.setCursor(0,0);
+
+  // Print header
   Oled.print("Weather Forecast");
 
-  // Get sensors data
+  // Get Sensors data
   getSensorsData();
 
-  // Get sea pressure and display forecast
+  // Get sea pressure and forecast, and display to OLED display
   getSeaPressure();
-  
-  // Display temperature to OLED Screen
+
+  // Display Temperature data to OLED display
   displayTemperature();
 
-  // Display humidity to OLED Screen
-  displayHumidity();
-
-  // Display pressure to OLED Screen
+  // Display Air Pressure to OLED display
   displayPressure();
 
-  // Display altitude to OLED Screen
+  // Display Altitude to OLED display
   displayAltitude();
 
-  // Display time to OLED Screen (Since Program run)
+  // Display humidity to OLED display
+  displayHumidity();
+
+  // Display time to OLED display
   displayTime();
 
-  // Update display
+  // Updates OLED display
   Oled.refreshDisplay();
 
   delay(delayTime);
+
 }
 
 void getSensorsData(){
   temperature = Pressure.readTemperature(); // Temperature in celcius
   airPressure = Pressure.readPressure() / 100; // Air pressure in hecto pascal (hPa)
-  altitude = Pressure.readAltitude() / 100; // Altitude in meter
+  altitude = Pressure.readAltitude(); // Altitude in meter
   humidity = Environment.readHumidity(); // Humidity in percentage
 }
 
-void displayTemperature() {
-  // Set cursor 2nd Line
-  Oled.setCursor(0, 1);
-  // Print label
-  Oled.print("Temp: ");
-  // Print temperature in celcius
-  Oled.print(temperature);
-  // Print unit
-  Oled.print(" C");
+void displayTemperature(){
+  Oled.setCursor(0,1); // Set cursor on 2nd line
+  Oled.print("Temp: "); // Print label
+  Oled.print(temperature); // Print temperature in celcius
+  Oled.print(" C"); // Print unit
 }
 
-void displayPressure() {
-  // Set cursor 3rd line
-  Oled.setCursor(0, 2);
-  // Print label
-  Oled.print("Pre: ");
-  // Print air pressure in hecto pascal (hPa)
-//  Oled.print(airPressure);
-  // Print sea pressure in hecto pascal (hPa)
-  Oled.print(seaPressure);
-  // Print unit
-  Oled.print(" hPa");
+void displayPressure(){
+  Oled.setCursor(0,2); // Set cursor on 3rd line
+  Oled.print("Pre: "); // Print label
+//  Oled.print(airPressure); // Print air pressure in hecto pascal (hPa)
+  Oled.print(seaPressure); // Print sea pressure in hecto pascal (hPa)
+  Oled.print(" hPa"); // Print unit
 }
 
-void displayAltitude() {
-  // Set cursor 4th Line
-  Oled.setCursor(0, 3);
-  // Print label
-  Oled.print("Alt: ");
-  // Print alitude in meter
-  Oled.print(altitude);
-  // Printer unit
-  Oled.print(" m");
+void displayAltitude(){
+  Oled.setCursor(0,3); // Set cursor on 4th line
+  Oled.print("Alt: "); // Print label
+  Oled.print(altitude); // Print altitude in meter
+  Oled.print(" m"); // Print unit
 }
 
-void displayHumidity() {
-  // Set cursor 5th line
-  Oled.setCursor(0, 4);
-  // Print label
-  Oled.print("Humid: ");
-  // Print humidity in percentage
-  Oled.print(humidity);
-  // Print unit
-  Oled.print(" %");
+void displayHumidity(){
+  Oled.setCursor(0,4); // Set cursor on 5th line
+  Oled.print("Humid: "); // Print label
+  Oled.print(humidity); // Print humidity in percentage
+  Oled.print(" %"); // Print unit
 }
-
 
 /************************This is Zambretti Algorithm for weather forecasting.  *******************************/
 /**
    For more information on the Zambretti Algorithm you may check this links:
    https://communities.sas.com/t5/SAS-Analytics-for-IoT/Zambretti-Algorithm-for-Weather-Forecasting/td-p/679487#
-
    This codes are base on and modified:
    https://github.com/fandonov/weatherstation/blob/master/weather-station/weather-station.ino
 */
@@ -212,7 +189,7 @@ void getSeaPressure() {
 void getDisplayForecast() {
   // Forecast not yet calibrated
   if (!doneCalibForecast) {
-    displayForecast(CALIBRATION);
+    displayForecast(CALIBRATION); // Records 10 sea pressure to finish calibration..
   }
   // Forecast already calibrated
   else {
