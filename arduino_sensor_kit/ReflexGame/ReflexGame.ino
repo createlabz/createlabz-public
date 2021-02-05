@@ -1,11 +1,14 @@
 #include "Arduino_SensorKit.h"
+// Define needed pins
 #define ledPin 6
 #define buttonPin 4
 #define buzzerPin 5
 
+// Store value for random delay
 int long ranDelay = 0;
-int sensorValue = 0;
+// Response times variables
 float realTime, timeResponse, fastestTimeResponse;
+// Buzzer tone (NOTE_AS4)
 #define buzzerTone 466 // NOTE_AS4 TONE
 
 void setup()
