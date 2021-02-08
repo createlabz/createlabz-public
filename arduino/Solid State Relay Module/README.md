@@ -1,4 +1,4 @@
-# 32x8 LED Matrix Display Using Bluetooth
+# 1-Channel and 4-Channel Solid State Relay Applications Using Light Bulbs
 ## Table of Contents
 * [General information](#general-information)
 * [Hardware](#hardware)
