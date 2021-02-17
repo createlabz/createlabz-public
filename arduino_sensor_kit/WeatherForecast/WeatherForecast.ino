@@ -1,14 +1,15 @@
 #include "Arduino_SensorKit.h"
 
+unsigned long delayTime = 1000; // 1 second delay time
+
+float temperature, airPressure, altitude, humidity, seaPressure;
+
 // Time since program run
 unsigned long seconds, minutes, hours;
 
-// Time delay
-unsigned long delayTime = 1000;
-
 // Parameters for detecting forecast
 // Store pressure values(Max 10)
-int pressureArray[10] = {0};
+int seaPressureArray[10] = {0};
 // Store the minute of last recorded pressure
 int lastRecPresMin = 0;
 // Store the hour of last recorded pressure
@@ -16,7 +17,7 @@ int lastRecPresHr = 0;
 // Counter for recorded pressure
 int recPresCounter = 0;
 // Current month (Ex: January = 1 & December = 12)
-int monthNow = 1;
+int monthNow = 1; // Current month is january
 // Identifier if first calibration is already done
 bool doneCalibForecast = false;
 // Set true if calibration is done in seconds
@@ -33,59 +34,105 @@ bool isCalibDoneSec = true;
 
 void setup() {
   // put your setup code here, to run once:
-
-  // Start serial for debugging
-  Serial.begin(9600);
-
-  // Start OLED Display
+  // Initialize OLED diplay
   Oled.begin();
-  // Set true to flip display if not false.
-  Oled.setFlipMode(false);
+  // Set OLED Display mode
+  Oled.setFlipMode(true); // If true rotates the display to 180 degrees
 
-  // Start DHT Temperature and Humidity Sensor
-  Environment.begin();
-
-  // Start Barometer pressure Sensor
+  // Initialize Air Pressure Sensor
   Pressure.begin();
+
+  // Initialize DHT temperature and humidity sensor
+  Environment.begin();
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
 
-  // Get current time (Since program run)
+  // Get time since boot
   getTime();
 
-  // Set OLED font type
+  // OLED Font type
   Oled.setFont(u8x8_font_chroma48medium8_r);
-  // Set starting cursor (1st Line)
-  Oled.setCursor(0, 0);
-  // Print Weather Forecast header text
+
+  // Set starting cursor
+  Oled.setCursor(0,0);
+
+  // Print header
   Oled.print("Weather Forecast");
 
-  // Display temperature to OLED Screen
-  displayTemperature();
+  // Get Sensors data
+  getSensorsData();
 
-  // Display humidity to OLED Screen
-  displayHumidity();
-
-  // Display pressure to OLED Screen
-  displayPressure();
-
-  // Display altitude to OLED Screen
-  displayAltitude();
-
-  // Display time to OLED Screen (Since Program run)
-  displayTime();
-
-  // Display forecast
+  // Get sea pressure and forecast, and display to OLED display
   getSeaPressure();
 
-  // Update display
+  // Display Temperature data to OLED display
+  displayTemperature();
+
+  // Display Air Pressure to OLED display
+  displayPressure();
+
+  // Display Altitude to OLED display
+  displayAltitude();
+
+  // Display humidity to OLED display
+  displayHumidity();
+
+  // Display time to OLED display
+  displayTime();
+
+  // Updates OLED display
   Oled.refreshDisplay();
 
   delay(delayTime);
+
 }
 
+void getSensorsData(){
+  temperature = Pressure.readTemperature(); // Temperature in celcius
+  airPressure = Pressure.readPressure() / 100; // Air pressure in hecto pascal (hPa)
+  altitude = Pressure.readAltitude(); // Altitude in meter
+  humidity = Environment.readHumidity(); // Humidity in percentage
+}
+
+void displayTemperature(){
+  Oled.setCursor(0,1); // Set cursor on 2nd line
+  Oled.print("Temp: "); // Print label
+  Oled.print(temperature); // Print temperature in celcius
+  Oled.print(" C"); // Print unit
+}
+
+void displayPressure(){
+  Oled.setCursor(0,2); // Set cursor on 3rd line
+  Oled.print("Pre: "); // Print label
+//  Oled.print(airPressure); // Print air pressure in hecto pascal (hPa)
+  Oled.print(seaPressure); // Print sea pressure in hecto pascal (hPa)
+  Oled.print(" hPa"); // Print unit
+}
+
+void displayAltitude(){
+  Oled.setCursor(0,3); // Set cursor on 4th line
+  Oled.print("Alt: "); // Print label
+  Oled.print(altitude); // Print altitude in meter
+  Oled.print(" m"); // Print unit
+}
+
+void displayHumidity(){
+  Oled.setCursor(0,4); // Set cursor on 5th line
+  Oled.print("Humid: "); // Print label
+  Oled.print(humidity); // Print humidity in percentage
+  Oled.print(" %"); // Print unit
+}
+
+/************************This is Zambretti Algorithm for weather forecasting.  *******************************/
+/**
+   For more information on the Zambretti Algorithm you may check this links:
+   https://communities.sas.com/t5/SAS-Analytics-for-IoT/Zambretti-Algorithm-for-Weather-Forecasting/td-p/679487#
+   This codes are base on and modified:
+   https://github.com/fandonov/weatherstation/blob/master/weather-station/weather-station.ino
+*/
+// Time Since boot
 void getTime() {
   // Convert milliseconds to seconds.
   seconds = (millis() / 1000l) % 60;
@@ -95,47 +142,7 @@ void getTime() {
   hours = (millis() / (1000l * 60l * 60l)) % 24;
 }
 
-void displayTemperature() {
-  // Set cursor (2nd Line)
-  Oled.setCursor(0, 1);
-  // Get and print Barometer temperature sensor data (in Celcius).
-  Oled.print("Temp: ");
-  Oled.print(Pressure.readTemperature());
-  Oled.print(" C");
-}
-
-void displayHumidity() {
-  // Set cursor (3rd Line)
-  Oled.setCursor(0, 2);
-  // Get and Display DHT Humidity Sensor data.
-  Oled.print("Humid: ");
-  Oled.print(Environment.readHumidity());
-  Oled.print(" %");
-}
-
-void displayPressure() {
-  // Set cursor (4th Line)
-  Oled.setCursor(0, 3);
-  // Get and display Barometer atmospheric pressure sensor data (in hecto Pascal).
-  Oled.print("Pre: ");
-  // Get sea pressure
-  int seapressure = stationToSeaLevel((Pressure.readPressure() / 100), Pressure.readAltitude(), Pressure.readTemperature());
-  //  // Convert atmospheric pressure from pascal (Pa) to hecto pascal (hPa)
-  //  float atmHpa = Pressure.readPressure() / 100;
-  Oled.print(seapressure);
-  Oled.print(" hPa");
-
-}
-
-void displayAltitude() {
-  // Set cursor (5th Line)
-  Oled.setCursor(0, 4);
-  // Get and display altitude sensor data
-  Oled.print("Alt: ");
-  Oled.print(Pressure.readAltitude());
-  Oled.print(" m");
-}
-
+// Display time since boot
 void displayTime() {
   // Set cursor (6th Line)
   Oled.setCursor(0, 5);
@@ -154,27 +161,20 @@ void displayTime() {
   Oled.print(seconds);
 }
 
-/************************This is Zambretti Algorithm for weather forecasting.  *******************************/
-/**
-   For more information on the Zambretti Algorithm you may check this links:
-   https://communities.sas.com/t5/SAS-Analytics-for-IoT/Zambretti-Algorithm-for-Weather-Forecasting/td-p/679487#
 
-   This codes are base on and modified:
-   https://github.com/fandonov/weatherstation/blob/master/weather-station/weather-station.ino
-*/
 void getSeaPressure() {
   // Store sea pressure every minute (if isCalibDoneSec is true storing will be in seconds)
   if (minutes != lastRecPresMin or isCalibDoneSec) {
     // Get sea pressure
-    int seapressure = stationToSeaLevel((Pressure.readPressure() / 100), Pressure.readAltitude(), Pressure.readTemperature());
+    seaPressure = stationToSeaLevel((Pressure.readPressure() / 100), Pressure.readAltitude(), Pressure.readTemperature());
     
     // Store sea pressure
     if (recPresCounter >= 10) {
       doneCalibForecast = true;
-      for (int i = 0; i < 9; i++) pressureArray[i] = pressureArray[i + 1];
-      pressureArray[recPresCounter - 1] = seapressure;
+      for (int i = 0; i < 9; i++) seaPressureArray[i] = seaPressureArray[i + 1];
+      seaPressureArray[recPresCounter - 1] = seaPressure;
     } else {
-      pressureArray[recPresCounter] = seapressure;
+      seaPressureArray[recPresCounter] = seaPressure;
       recPresCounter++;
     }
     
@@ -189,21 +189,21 @@ void getSeaPressure() {
 void getDisplayForecast() {
   // Forecast not yet calibrated
   if (!doneCalibForecast) {
-    displayForecast(CALIBRATION);
+    displayForecast(CALIBRATION); // Records 10 sea pressure to finish calibration..
   }
   // Forecast already calibrated
   else {
     // Get forecast number base on Zambretti Algorithm
-    int Z = calculateZambretti((pressureArray[9] + pressureArray[8] + pressureArray[7]) / 3, (pressureArray[0] + pressureArray[1] + pressureArray[2]) / 3, monthNow);
+    int Z = calculateZambretti((seaPressureArray[9] + seaPressureArray[8] + seaPressureArray[7]) / 3, (seaPressureArray[0] + seaPressureArray[1] + seaPressureArray[2]) / 3, monthNow);
     // Rising
-    if (pressureArray[9] + pressureArray[8] + pressureArray[7] - pressureArray[0] - pressureArray[1] - pressureArray[2] >= 3) {
+    if (seaPressureArray[9] + seaPressureArray[8] + seaPressureArray[7] - seaPressureArray[0] - seaPressureArray[1] - seaPressureArray[2] >= 3) {
       if (Z < 3) displayForecast(SUN);
       else if (Z >= 3 and Z <= 9) displayForecast(SUN_CLOUD);
       else if (Z > 9 and Z <= 17) displayForecast(CLOUD);
       else if (Z > 17) displayForecast(RAIN);
     }
     // Falling
-    else if (pressureArray[0] + pressureArray[1] + pressureArray[2] - pressureArray[9] - pressureArray[8] - pressureArray[7] >= 3) {
+    else if (seaPressureArray[0] + seaPressureArray[1] + seaPressureArray[2] - seaPressureArray[9] - seaPressureArray[8] - seaPressureArray[7] >= 3) {
       if (Z < 4) displayForecast(SUN);
       else if (Z >= 4 and Z < 14) displayForecast(SUN_CLOUD);
       else if (Z >= 14 and Z < 19)displayForecast(THUNDER);
