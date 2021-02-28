@@ -1,4 +1,4 @@
-# 32x8 LED Matrix Display Using Bluetooth
+# MPU9255 Module: Gyroscope, Accelerometer and Magnetometer Applications
 ## Table of Contents
 * [General information](#general-information)
 * [Hardware](#hardware)
@@ -9,28 +9,25 @@
 * [Contact](#contact)
 
 ## General Information
-In this tutorial, we will be using a 32x8 LED Matrix to display messages. The messages will be displayed using a Bluetooth module and an app connected to your mobile phone.
+In this tutorial, we will be using an MPU9255 module to test its accelerometer, gyroscope and magnetometer. The module will be tested by monitoring the module and how it reacts to movements in specific directions and proximity to sensitive areas.
 
 ## Hardware
 * Arduino Uno
-* Matrix LED Display (32x8 module)
-* HC-05 Bluetooth Module
-* Breadboard
+* MPU-9255 9DOF 9-axis Inertial MPU
 * Jumper Wires
 
 ## Software
 * Arduino
-* [Bluetooth Terminal HC-05](https://play.google.com/store/apps/details?id=project.bluetoothterminal) (on Google Play Store)
 
 ## Setup
-For detailed instructions on how to recreate this project, head on to this [blogpost]() .
+For detailed instructions on how to recreate this project, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/mpu-9255-application).
 
 More projects can be found in the [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
 ## Features
-* Learn Arduino applications on LEDs and Bluetooth
-* Create a message display
-* Connect the message display to Bluetooth and create your messages
+* Learn Arduino applications on MPU modules
+* Test the accelerometer, magnetometer and gyroscope of the module
+* Monitor the module's movements and proximity to sensitive areas
 
 ## Status
 Project is: _finished_
