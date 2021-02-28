@@ -1,4 +1,4 @@
-#define LDR A1
+#define LDR A3
 #define LED 6
 
 int inputval=0;
@@ -15,7 +15,7 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   inputval=analogRead(LDR);
-  outputval=map(inputval,0,749,255,0);
+  outputval=map(inputval,0,756,255,0);
 
   analogWrite(LED,outputval);
   Serial.println(outputval);

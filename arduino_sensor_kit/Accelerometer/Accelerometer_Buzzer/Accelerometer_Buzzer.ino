@@ -29,7 +29,7 @@ void loop() {
   Serial.print("z:"); 
   Serial.println(zVal);// Read the Z Value
 
-  if (yVal <= -0.60 || yVal >= 0.60 || zVal <= 0.70) {
+  if (yVal <= -0.90 || yVal >= 0.90 || zVal <= 0.40) {
     tone(buzzer,1000);
   }
   else {

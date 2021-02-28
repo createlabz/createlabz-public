@@ -25,7 +25,7 @@ In this tutorial, we will be using a 1-Channel and a 4-Channel Solid State Relay
 * Arduino
 
 ## Setup
-For detailed instructions on how to recreate this project, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/1-channel-and-4-channel-relay) .
+For detailed instructions on how to recreate this project, head on to this [blogpost](https://store.createlabz.com/blogs/createlabz-tutorials/1-channel-and-4-channel-relay).
 
 More projects can be found in the [KnowledgeBase and Tutorials](https://store.createlabz.com/blogs/createlabz-tutorials) blog.
 
