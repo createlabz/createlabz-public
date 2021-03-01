@@ -11,7 +11,7 @@ SoftwareSerial SwSerial(11, 12); // RX, TX
 
 #include <BlynkSimpleSerialBLE.h>
 
-char auth[] = "HHFvRZPPdcMNGKONWw0waQrce8vQu7m8";
+char auth[] = "------"; //Acquired from email or the nut button on your Blynk App
 
 long duration;
 int distance;
