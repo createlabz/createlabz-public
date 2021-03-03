@@ -35,10 +35,6 @@ void myDetectedTimerEvent()
   Blynk.virtualWrite(V5, "Obstruction Detected");
 }
 
-BLYNK_CONNECTED() {
-  Blynk.syncAll();
-}
-
 void setup() {
   // put your setup code here, to run once:
   pinMode(echoPin, INPUT);
@@ -55,6 +51,7 @@ void setup() {
   Serial.println("Waiting for connections...");
 
   timer1.setInterval(1000L, myNormalTimerEvent);
+  timer1.run();
 }
 
 void loop() {
