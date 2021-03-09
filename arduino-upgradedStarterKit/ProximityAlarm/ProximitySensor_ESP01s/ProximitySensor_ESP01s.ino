@@ -21,12 +21,12 @@ SoftwareSerial EspSerial(12, 11); // RX, TX
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).
-char auth[] = "5c6pFHdq71CuypOW2cRKpN22CmlJ5iYE";
+char auth[] = "---------";
 
 // Your WiFi credentials.
 // Set password to "" for open networks.
-char ssid[] = "Bruh";
-char pass[] = "dragonclawz";
+char ssid[] = "---------";
+char pass[] = "---------";
 
 // Your ESP8266 baud rate:
 #define ESP8266_BAUD 9600
