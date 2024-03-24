@@ -1,2 +1,2 @@
 # createlabz-public
-CreateLabz public repository.
+CreateLabz public repository for example codes and hardware assembly diagrams/schematics.
